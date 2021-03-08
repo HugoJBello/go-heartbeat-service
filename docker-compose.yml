@@ -1,0 +1,12 @@
+version: '2.1'
+
+services:
+  go-heartbeat-service:
+    build: .
+    restart: always
+    network_mode: "host"
+    ports:
+      - "8080:8080"
+    volumes:
+      - "./data/:/usr/src/"
+    container_name: go-heartbeat-service
