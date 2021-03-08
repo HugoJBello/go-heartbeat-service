@@ -1,4 +1,4 @@
-version: '2.1'
+version: "3.2"
 
 services:
   go-heartbeat-service:
@@ -8,5 +8,9 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - "./data/:/usr/src/"
+      - ./data/test.db:/dist/test.db:ro
     container_name: go-heartbeat-service
+
+volumes:
+  db-data:
+
