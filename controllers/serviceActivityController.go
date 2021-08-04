@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"github.com/HugoJBello/go-heartbeat-service/managers"
 	"github.com/HugoJBello/go-heartbeat-service/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -23,13 +24,10 @@ func GetActivity(c *gin.Context) {
 	limit, _ := strconv.ParseInt(limitStr, 10, 64)
 	skip, _ := strconv.ParseInt(skipStr, 10, 64)
 
-	var lastActivity []models.ServiceActivity
-	models.DB.Order("date desc").Offset(skip).Limit(limit).Find(&lastActivity)
+	var lastActivity *[]models.ServiceActivity = managers.GetActivity(skip, limit)
 
-	c.JSON(http.StatusOK, gin.H{"data": lastActivity})
+	c.JSON(http.StatusOK, gin.H{"data": *lastActivity})
 }
-
-
 
 func CreateActivity(c *gin.Context) {
 	var input models.CreateServiceActivity
@@ -39,7 +37,7 @@ func CreateActivity(c *gin.Context) {
 	}
 
 	activity := models.ServiceActivity{Date: input.Date, ServiceId: input.ServiceId, ServiceName: input.ServiceName, ActivityContent: input.ActivityContent, ActivityContentType: input.ActivityContentType}
-	models.DB.Create(&activity)
+	_ = managers.CreateActivity(&activity)
 
 	c.JSON(http.StatusOK, gin.H{"data": []models.ServiceActivity{activity}})
 }

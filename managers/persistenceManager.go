@@ -1,16 +1,16 @@
-// models/setup.go
-
-package models
+package managers
 
 import (
-	"fmt"
+"fmt"
+	"github.com/HugoJBello/go-heartbeat-service/models"
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
+_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
 var DB *gorm.DB
 
 func init(){
+	fmt.Println("Connecting to database")
 	ConnectDataBase()
 }
 
@@ -26,7 +26,7 @@ func ConnectDataBase() {
 		panic("Failed to connect to database!")
 	}
 
-	database.AutoMigrate(&ServiceActivity{})
+	database.AutoMigrate(&models.ServiceActivity{})
 
 	DB = database
 }

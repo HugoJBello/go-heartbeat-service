@@ -1,12 +1,14 @@
 package controllers
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+)
 
 func SetupServer() *gin.Engine {
 	r := gin.Default()
 
-	r.GET("/activity/last", GetActivity)
-	r.POST("/activity/new", CreateActivity)
+	r.GET(GetActivityRoute, GetActivity)
+	r.POST(CreateActivityRoute, CreateActivity)
 
 	return r
 }

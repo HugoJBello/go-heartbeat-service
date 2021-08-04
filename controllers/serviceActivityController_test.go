@@ -19,7 +19,7 @@ func TestGetActivity(t *testing.T) {
 	ts := httptest.NewServer(SetupServer())
 	defer ts.Close()
 
-	resp, err := http.Get(fmt.Sprintf("%s/activity/last?limit=1&skip=0", ts.URL))
+	resp, err := http.Get(fmt.Sprintf("%s"+GetActivityRoute+"?limit=1&skip=0", ts.URL))
 
 	if err != nil {
 		t.Fatalf("Expected no error, got %v", err)
@@ -52,7 +52,7 @@ func TestCreateActivity(t *testing.T) {
 	ts := httptest.NewServer(SetupServer())
 	defer ts.Close()
 
-	resp, err := http.Post(fmt.Sprintf("%s/activity/new", ts.URL), "application/json",  bytes.NewBuffer(jsonBody))
+	resp, err := http.Post(fmt.Sprintf("%s"+CreateActivityRoute, ts.URL), "application/json",  bytes.NewBuffer(jsonBody))
 
 	if err != nil {
 		t.Fatalf("Expected no error, got %v", err)
